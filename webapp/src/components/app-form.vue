@@ -35,9 +35,11 @@
           <input type="number" class="form-control" id="age" v-model.number="formData.age" required>
         </div>
         <div class="text-center">
-          <button type="submit" class="btn btn-success">Predecir Diabetes</button>
+          <button type="submit" class="btn btn-success d-inline-block mr-3 btn-spacing">Predecir Diabetes</button>
+          <button @click="$emit('showDashboard')" class="btn btn-secondary d-inline-block btn-spacing" style="margin-left: 10px;">Regresar al Dashboard</button>
         </div>
       </form>
+      
     </div>
 </template>
   
@@ -59,15 +61,23 @@
       };
     },
     methods: {
-      submitPredictionForm() {
-        // Aquí integraría la lógica para enviar los datos a su servidor o API de predicción.
-        console.log('Form data submitted:', this.formData);
-        // Reset the form after submission for the next input.
-        Object.keys(this.formData).forEach(key => {
-          this.formData[key] = null;
-        });
-      }
+        submitPredictionForm() {
+            // Aquí integraría la lógica para enviar los datos a su servidor o API de predicción.
+            console.log('Form data submitted:', this.formData);
+            // Reset the form after submission for the next input.
+            Object.keys(this.formData).forEach(key => {
+            this.formData[key] = null;
+            });
+            this.$emit('showResults');
+        }
     }
   };
 </script>
-  
+
+<style>
+
+.btn-spacing {
+  padding: auto;
+}
+
+</style>

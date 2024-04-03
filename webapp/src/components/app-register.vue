@@ -38,7 +38,7 @@
     methods: {
       register() {
         // Implemente su lógica de registro aquí
-        console.log("Registration attempt with:", this.email, this.password);
+        this.$emit('showDashboard');
       },
     },
   };

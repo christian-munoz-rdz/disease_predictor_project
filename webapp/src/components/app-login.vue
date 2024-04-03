@@ -1,4 +1,7 @@
 <template>
+    <div class="text-center">
+      <img src="../assets/login-logo.png" alt="Diabetes Prediction" style="width: 200px;">
+    </div>
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -37,9 +40,16 @@
     methods: {
       login() {
         // Implemente su lógica de autenticación aquí
-        console.log("Login attempt with:", this.email, this.password);
+        this.$emit('showDashboard');
       },
     },
   };
 </script>
   
+
+<style>
+  .logo {
+    max-width: 100px; /* Ajuste el tamaño según sea necesario */
+    margin: 20px 0; /* Espaciado superior e inferior para el logo */
+  }
+</style>
