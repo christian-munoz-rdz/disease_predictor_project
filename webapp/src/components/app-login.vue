@@ -12,8 +12,8 @@
             <div class="card-body">
               <form @submit.prevent="login">
                 <div class="mb-3">
-                  <label for="email" class="form-label">Correo Electrónico</label>
-                  <input type="email" class="form-control" id="email" v-model="email" required>
+                  <label for="username" class="form-label">Nombre de usuario</label>
+                  <input type="username" class="form-control" id="username" v-model="username" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Contraseña</label>
@@ -30,17 +30,29 @@
 </template>
   
 <script>
+import axios from 'axios';
+
   export default {
     data() {
       return {
-        email: '',
+        username: '',
         password: '',
       };
     },
     methods: {
       login() {
         // Implemente su lógica de autenticación aquí
-        this.$emit('showDashboard');
+        axios.post('http://192.168.100.17:8080/app-login',{
+          username: this.username,
+          password: this.password
+        })
+        .then(response => {
+          console.log(response.data);
+          this.$emit('showDashboard');
+        })
+        .catch(error => {
+          console.error('Error: ',error);
+        });
       },
     },
   };
