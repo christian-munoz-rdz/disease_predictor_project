@@ -11,7 +11,8 @@ app = FastAPI()
 # Lista de orígenes permitidos
 origins = [
     "http://localhost:8080",  # Permitir solicitudes desde su frontend VueJS
-    "http://localhost:3000",  # Otro origen que desee permitir, si es necesario
+    "http://localhost:3000",
+    "http://192.168.1.69:8080"
 ]
 
 app.add_middleware(
