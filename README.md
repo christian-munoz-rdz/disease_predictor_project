@@ -113,4 +113,14 @@ El frontend de la aplicación se implementará con React y permitirá al usuario
 
 ### Diseño de la Interfaz Gráfica
 
-![alt text](./images/interfaz.png)
+#### Página inicial (login)
+![alt text](./images/login_interfaz.png)
+
+#### Página de registro
+![alt text](./images/register_interfaz.png)
+
+#### Página principal
+![alt text](./images/mainPage_interfaz.png)
+
+#### Página de historial de consultas
+![alt text](./images/history_interfaz.png)
