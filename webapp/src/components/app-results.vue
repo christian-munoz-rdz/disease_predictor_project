@@ -11,6 +11,7 @@
   
   <script>
   export default {
+    props: ['probability'],
     data() {
       return {
         message: 'Calculando resultados...',
@@ -25,7 +26,7 @@
     },
     mounted() {
       setTimeout(() => {
-        this.message = 'Usted tiene un 50% de probabilidad de padecer diabetes';
+        this.message = `La probabilidad de tener diabetes es del ${this.probability}%`;
         this.isBreathing = false; // Detiene la animación
       }, 15000); // 15 segundos
     }

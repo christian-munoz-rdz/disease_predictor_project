@@ -61,15 +61,28 @@
       };
     },
     methods: {
-        submitPredictionForm() {
-            // Aquí integraría la lógica para enviar los datos a su servidor o API de predicción.
-            console.log('Form data submitted:', this.formData);
-            // Reset the form after submission for the next input.
-            Object.keys(this.formData).forEach(key => {
-            this.formData[key] = null;
-            });
-            this.$emit('showResults');
-        }
+      submitPredictionForm() {
+        const apiURL = 'http://127.0.0.1:8000/predict/'; // Ajuste esta URL a la de su API
+        fetch(apiURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          this.$emit('showResults', data.probability); // Emitir evento con la probabilidad
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      // Reseteo del formulario movido a una promesa para asegurar la secuencia correcta
+        Object.keys(this.formData).forEach(key => {
+          this.formData[key] = null;
+        });
+      }
     }
   };
 </script>

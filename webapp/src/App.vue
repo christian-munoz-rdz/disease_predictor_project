@@ -5,7 +5,7 @@
     <Dashboard v-if="currentView === 'dashboard'" @showForm="showForm" @showHistory="showHistory" @showLogin="showLogin"/>
     <DiabetesForm v-if="currentView === 'form'" @showDashboard="showDashboard" @showResults="showResults"/>
     <History v-if="currentView === 'history'" @showDashboard="showDashboard" @showForm="showForm"/>
-    <Results v-if="currentView === 'results'" @showDashboard="showDashboard"/>
+    <Results v-if="currentView === 'results'" :probability="predictionProbability" @showDashboard="showDashboard"/>
   </div>
 </template>
 
@@ -28,7 +28,8 @@ export default {
   },
   data() {
     return {
-      currentView: 'login' 
+      currentView: 'login', 
+      predictionProbability: null, // Agregar esta línea
     };
   },
   methods: {
@@ -47,7 +48,8 @@ export default {
     showDashboard() {
       this.currentView = 'dashboard';
     },
-    showResults() {
+    showResults(probability) {
+      this.predictionProbability = probability;
       this.currentView = 'results';
     }
   }
