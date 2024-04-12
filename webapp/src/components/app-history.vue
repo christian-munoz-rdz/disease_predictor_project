@@ -9,9 +9,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="entry in historyEntries" :key="entry.id">
-          <td>{{ entry.date }}</td>
-          <td>{{ entry.percentage }}%</td>
+        <tr v-for="(entry, index) in historyEntries" :key="index">
+          <td>{{ entry[0] }}</td>
+          <td>{{ entry[1] * 100 }}%</td>
         </tr>
       </tbody>
     </table>
@@ -26,16 +26,25 @@
 export default {
   data() {
     return {
-      historyEntries: [
-        // Aquí se generan algunos datos ficticios para el ejemplo
-        { id: 1, date: '2024-04-01', percentage: 50 },
-        { id: 2, date: '2024-03-28', percentage: 45 },
-        { id: 3, date: '2024-03-20', percentage: 60 },
-        // ... Añadir más entradas según sea necesario hasta 10
-      ]
+      historyEntries: []
     };
   },
+  mounted(){
+    this.getHistory();
+  },
   methods: {
+    getHistory() {
+      // Realizar una solicitud al backend para obtener el historial de consultas
+      fetch('http://127.0.0.1:8000/history/')
+        .then(response => response.json())
+        .then(data => {
+          // Asignar los datos recibidos del backend a la variable historyEntries
+          this.historyEntries = data;
+        })
+        .catch(error => {
+          console.error('Error al obtener el historial de consultas:', error);
+        });
+    },
     goToDashboard() {
       this.$emit('showDashboard');
     },

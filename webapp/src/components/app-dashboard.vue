@@ -2,7 +2,7 @@
     <div style="position: absolute; top: 20px; left: 20px; right: 20px;">
         <div class="d-flex align-items-center">
             <img src="../assets/user.png" alt="User Avatar" class="rounded-circle" style="width: 50px; height: 50px;">
-            <span class="ml-2">Usuario</span>
+            <span class="ml-2">{{ username }}</span>
         </div>
     </div>
     <div class="container mt-5 d-flex flex-column justify-content-center vh-100">
@@ -19,6 +19,12 @@
 <script>
 export default {
     name: 'app-dashboard',
+    props: {
+        username: {
+            type: String,
+            required: true
+        }
+    }
 };
 </script>
 

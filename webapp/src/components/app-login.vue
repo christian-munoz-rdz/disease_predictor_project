@@ -12,13 +12,14 @@
           <div class="card-body">
             <form @submit.prevent="login">
               <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" v-model="email" required>
+                <label for="username" class="form-label">Nombre de usuario</label>
+                <input type="text" class="form-control" id="username" v-model="username" required>
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" v-model="password" required>
               </div>
+              <div v-if="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
               <button type="submit" class="btn btn-primary">Ingresar</button>
               <button type="button" class="btn btn-link" @click="$emit('showRegister')">Crear una cuenta nueva</button>
             </form>
@@ -31,16 +32,45 @@
 
 <script>
 export default {
+  name: 'DiabetesLogin',
+  emits: ['showRegister', 'showDashboard', 'loginSuccess'],
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
+      errorMessage: ''
     };
   },
   methods: {
-    login() {
-      // Implemente su lógica de autenticación aquí
-      this.$emit('showDashboard');
+    login(){
+      const userData = {
+        username: this.username,
+        password: this.password
+      };
+      const loginURL = 'http://127.0.0.1:8000/login/';
+
+      fetch(loginURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+      .then(response => {
+        if(!response.ok){
+          throw new Error('Error en la solicitud');
+        }
+        //Si fue exitosa la solicitud
+        return response.json();
+      })
+      .then(data => {
+        this.$emit('loginSuccess', data.username);
+        this.$emit('showDashboard');
+      })
+      .catch(error => {
+        this.errorMessage = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+        console.error('Error de autenticación:', error);
+      });
     },
   },
 };

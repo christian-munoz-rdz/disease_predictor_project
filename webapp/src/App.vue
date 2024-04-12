@@ -2,7 +2,7 @@
   <div id="app">
     <Login v-if="currentView === 'login'" @showRegister="showRegister" @showDashboard="showDashboard"/>
     <Register v-if="currentView === 'register'" @showLogin="showLogin" @showDashboard="showDashboard"/>
-    <Dashboard v-if="currentView === 'dashboard'" @showForm="showForm" @showHistory="showHistory" @showLogin="showLogin"/>
+    <Dashboard v-if="currentView === 'dashboard'" :username="username" @showForm="showForm" @showHistory="showHistory" @showLogin="showLogin"/>
     <DiabetesForm v-if="currentView === 'form'" @showDashboard="showDashboard" @showResults="showResults"/>
     <History v-if="currentView === 'history'" @showDashboard="showDashboard" @showForm="showForm"/>
     <Results v-if="currentView === 'results'" :probability="predictionProbability" @showDashboard="showDashboard"/>
@@ -30,9 +30,13 @@ export default {
     return {
       currentView: 'login', 
       predictionProbability: null, // Agregar esta línea
+      username: null
     };
   },
   methods: {
+    loginSuccess(username){
+      this.username = username;
+    },
     showRegister() {
       this.currentView = 'register';
     },

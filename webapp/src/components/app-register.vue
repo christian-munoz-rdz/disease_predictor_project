@@ -9,8 +9,8 @@
             <div class="card-body">
               <form @submit.prevent="register">
                 <div class="mb-3">
-                  <label for="email" class="form-label">Correo Electrónico</label>
-                  <input type="email" class="form-control" id="email" v-model="email" required>
+                  <label for="username" class="form-label">Nombre de usuario</label>
+                  <input type="text" class="form-control" id="username" v-model="username" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Contraseña</label>
@@ -38,7 +38,28 @@
     methods: {
       register() {
         // Implemente su lógica de registro aquí
-        this.$emit('showDashboard');
+        const userData = {
+          username: this.username,
+          password: this.password
+        };
+
+        fetch('http://127.0.0.1:8000/register/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
+        .then(response => {
+          if(!response.ok){
+            throw new Error('Error en la solicitud');
+          }
+          //Si el registro fue exitoso
+          this.$emit('showLogin');
+        })
+        .catch(error => {
+          console.error('Error de registro:', error);
+        })
       },
     },
   };
